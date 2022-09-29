@@ -7,6 +7,7 @@ import App from './App';
 import configureStore from './store';
 
 const store = configureStore();
+window.store = store;
 
 if (process.env.NODE_ENV !== "production") {
   window.store = store;

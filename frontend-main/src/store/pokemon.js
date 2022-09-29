@@ -1,8 +1,11 @@
 import { LOAD_ITEMS, REMOVE_ITEM, ADD_ITEM } from './items';
+import { useParams } from 'react-router-dom';
+
 
 const LOAD = 'pokemon/LOAD';
 const LOAD_TYPES = 'pokemon/LOAD_TYPES';
 const ADD_ONE = 'pokemon/ADD_ONE';
+
 
 const load = list => ({
   type: LOAD,
@@ -14,10 +17,21 @@ const loadTypes = types => ({
   types
 });
 
-const addOnePokemon = pokemon => ({
+export const addOnePokemon = pokemon => ({
   type: ADD_ONE,
   pokemon
 });
+
+export const addOnePokemonThunkAction = (pokemonId) => async dispatch => {
+  const response = await fetch(`/api/pokemon/${pokemonId}`);
+
+  if (response.ok) {
+    const pokemon = await response.json();
+
+    dispatch(addOnePokemon(pokemon));
+  }
+};
+
 
 export const getPokemon = () => async dispatch => {
   const response = await fetch(`/api/pokemon`);
